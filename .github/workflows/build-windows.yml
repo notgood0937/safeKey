@@ -46,7 +46,7 @@ jobs:
         uses: tauri-apps/tauri-action@v0.5
         with:
           projectPath: ./src-tauri
-          args: '--bundles nsis'
+          args: '--bundles nsis --no-updater'
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
