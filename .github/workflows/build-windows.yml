@@ -42,11 +42,24 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
+      - name: Disable updater for CI build
+        shell: pwsh
+        run: |
+          $path = "src-tauri/tauri.conf.json"
+          $json = Get-Content $path -Raw | ConvertFrom-Json
+          if ($json.plugins -and $json.plugins.updater) {
+            $json.plugins.PSObject.Properties.Remove("updater")
+          }
+          if ($json.bundle -and $json.bundle.createUpdaterArtifacts) {
+            $json.bundle.createUpdaterArtifacts = $false
+          }
+          $json | ConvertTo-Json -Depth 50 | Set-Content $path
+
       - name: Build Windows app (NSIS)
         uses: tauri-apps/tauri-action@v0.5
         with:
           projectPath: ./src-tauri
-          args: '--bundles nsis --no-updater'
+          args: '--bundles nsis'
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
