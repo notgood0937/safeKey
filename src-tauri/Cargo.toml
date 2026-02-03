@@ -1,0 +1,47 @@
+[package]
+name = "safekey"
+version = "0.1.0"
+description = "Secure Password Manager"
+authors = ["Tony Antony"]
+license = "AGPL 3.0"
+edition = "2021"
+rust-version = "1.81"
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+serde_json = "1.0"
+
+[dependencies]
+tauri = { version = "2.0", features = ["protocol-asset", "macos-private-api", "tray-icon"] }
+tauri-plugin-dialog = "2.0"
+tauri-plugin-opener = "2.0"
+tauri-plugin-os = "2.0"
+tauri-plugin-single-instance = "2.0"
+tauri-plugin-http = "2.0"
+tauri-plugin-shell = "2.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+aes-gcm = "0.10"
+sha2 = "0.10"
+rand = "0.8"
+base64 = "0.21"
+chrono = { version = "0.4", features = ["serde"] }
+pbkdf2 = "0.12"
+hmac = "0.12"
+tauri-plugin-updater = "2.9.0"
+iroh = "0.30.0"
+iroh-base = "0.30.0"
+socket2 = { version = "0.5.10", features = ["all"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+dunce = "1.0"

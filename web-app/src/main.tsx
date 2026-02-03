@@ -1,0 +1,15 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import { initializePlatformStyles } from './lib/platformStyles'
+import { initializeTheme } from './lib/theme'
+import App from './App'
+
+initializePlatformStyles()
+initializeTheme()
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
+)
