@@ -4,7 +4,7 @@ use tokio::sync::Mutex;
 use tokio::task::JoinHandle;
 
 use iroh::Endpoint;
-use iroh_base::ticket::NodeTicket;
+use iroh_base::{ticket::NodeTicket, NodeAddr};
 
 use crate::vault::VaultManager;
 
@@ -63,7 +63,7 @@ impl SyncManager {
 
         let endpoint = self.endpoint.as_ref().ok_or("Sync endpoint not ready")?;
         let ticket = ticket.parse::<NodeTicket>().map_err(|e| e.to_string())?;
-        let node_addr = ticket.node_addr().clone();
+        let node_addr: NodeAddr = prefer_ipv4_or_relay(ticket.node_addr().clone());
 
         let connection = endpoint
             .connect(node_addr, ALPN)
@@ -92,6 +92,22 @@ impl SyncManager {
         stream.finish().map_err(|e| e.to_string())?;
 
         Ok(())
+    }
+}
+
+fn prefer_ipv4_or_relay(node_addr: NodeAddr) -> NodeAddr {
+    let ipv4_addrs: Vec<_> = node_addr
+        .direct_addresses
+        .iter()
+        .copied()
+        .filter(|addr: &std::net::SocketAddr| addr.is_ipv4())
+        .collect();
+
+    if !ipv4_addrs.is_empty() {
+        NodeAddr::from_parts(node_addr.node_id, node_addr.relay_url.clone(), ipv4_addrs)
+    } else {
+        // No IPv4 route: drop direct addresses to encourage relay usage.
+        NodeAddr::from_parts(node_addr.node_id, node_addr.relay_url.clone(), std::iter::empty::<std::net::SocketAddr>())
     }
 }
 
