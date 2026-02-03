@@ -65,11 +65,11 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen apple-shell flex items-center justify-center px-8 py-10">
-            <Card className="w-full max-w-md apple-panel shadow-none">
+        <div className="min-h-screen oa-shell flex items-center justify-center px-8 py-12">
+            <Card className="w-full max-w-md oa-panel shadow-none">
                 <CardHeader className="space-y-1">
-                    <CardTitle className="text-2xl font-semibold">SafeKey</CardTitle>
-                    <CardDescription className="apple-muted">Open your vault in seconds.</CardDescription>
+                    <CardTitle className="text-2xl font-semibold tracking-tight">SafeKey</CardTitle>
+                    <CardDescription className="oa-muted">Open your vault in seconds.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Tabs
@@ -77,7 +77,7 @@ export default function Login() {
                         onValueChange={(value) => setIsCreating(value === 'create')}
                         className="w-full"
                     >
-                        <TabsList className="grid grid-cols-2 w-full apple-panel-2 shadow-none">
+                        <TabsList className="grid grid-cols-2 w-full oa-panel-soft shadow-none">
                             <TabsTrigger value="open">Open</TabsTrigger>
                             <TabsTrigger value="create">Create</TabsTrigger>
                         </TabsList>
@@ -92,9 +92,9 @@ export default function Login() {
                                             readOnly
                                             placeholder="Select a vault file..."
                                             onClick={handleSelectFile}
-                                            className="cursor-pointer h-10 rounded-md"
+                                            className="cursor-pointer oa-input"
                                         />
-                                        <Button type="button" variant="outline" onClick={handleSelectFile} className="h-10 rounded-md">
+                                        <Button type="button" variant="outline" onClick={handleSelectFile} className="oa-btn oa-btn-outline">
                                             Browse
                                         </Button>
                                     </div>
@@ -107,10 +107,10 @@ export default function Login() {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
-                                        className="h-10 rounded-md"
+                                        className="oa-input"
                                     />
                                 </div>
-                                <Button type="submit" className="w-full h-10 rounded-md" disabled={loading || !path || !password}>
+                                <Button type="submit" className="w-full oa-btn" disabled={loading || !path || !password}>
                                     {loading ? "Opening..." : "Open Vault"}
                                 </Button>
                             </form>
@@ -126,9 +126,9 @@ export default function Login() {
                                             readOnly
                                             placeholder="Choose where to save..."
                                             onClick={handleSelectFile}
-                                            className="cursor-pointer h-10 rounded-md"
+                                            className="cursor-pointer oa-input"
                                         />
-                                        <Button type="button" variant="outline" onClick={handleSelectFile} className="h-10 rounded-md">
+                                        <Button type="button" variant="outline" onClick={handleSelectFile} className="oa-btn oa-btn-outline">
                                             Browse
                                         </Button>
                                     </div>
@@ -141,17 +141,17 @@ export default function Login() {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
-                                        className="h-10 rounded-md"
+                                        className="oa-input"
                                     />
                                 </div>
-                                <Button type="submit" className="w-full h-10 rounded-md" disabled={loading || !path || !password}>
+                                <Button type="submit" className="w-full oa-btn" disabled={loading || !path || !password}>
                                     {loading ? "Creating..." : "Create Vault"}
                                 </Button>
                             </form>
                         </TabsContent>
                     </Tabs>
                 </CardContent>
-                <CardFooter className="text-xs apple-muted">
+                <CardFooter className="text-xs oa-muted">
                     Your master password never leaves this device.
                 </CardFooter>
             </Card>
